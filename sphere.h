@@ -48,20 +48,18 @@ public:
     Renderer(Window* window, Coordinates* coord);
 
     void set_window(Window* new_window);
-    Window* get_window();
     Window* get_window() const { return window; };
     
     void set_coordinates(Coordinates* new_coordinates) { coordinates = new_coordinates; };
-    Coordinates* get_coordinates() {return coordinates; };
     Coordinates* get_coordinates() const {return coordinates; };
 
     void show_on(Window* target) const;
     
     void clear() const;
-    void draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color = TX_BLACK, int thickness = 1);
-    void set_pixel(double x, double y, COLORREF color);
-    void draw_circle(double x, double y, double r, COLORREF color = TX_BLACK, int thickness = 1);
-    void draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color = TX_BLACK, int thinkness = 1);
+    void draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color = TX_BLACK, int thickness = 1) const;
+    void set_pixel(double x, double y, COLORREF color) const;
+    void draw_circle(double x, double y, double r, COLORREF color = TX_BLACK, int thickness = 1) const;
+    void draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color = TX_BLACK, int thinkness = 1) const;
 
     inline int to_pixel_x(double coord) const;
     inline int to_pixel_y(double coord) const;
@@ -80,10 +78,6 @@ public:
     Shape();
     Shape(int x, int y) : coord(x, y) {};
     virtual void draw(const Renderer& renderer) const = 0;
-    virtual void move(double time) = 0;
-
-    double get_x() {return coord.x;};
-    double get_y() {return coord.y;};
 
     double get_x() const {return coord.x;};
     double get_y() const {return coord.y;};
@@ -94,30 +88,27 @@ protected:
 
 class Circle : public Shape {
 public:
-    Circle(double x, double y, double raduis, RGBQUAD color);
+    Circle(double x, double y, double raduis, COLORREF color);
     virtual void draw(const Renderer& renderer) const override;
     
-    double get_radius() {return radius;};
-    double get_radius() const {return radius;};  
+    double get_radius() const { return radius; };  
 
 private:
     inline bool check_bound(double x, double y) const;
 
     double radius;
-    RGBQUAD color;
+    COLORREF color;
 };
 
 class Bubble : public Circle {
 public:
-    Bubble(double x, double y, double radius, double v_x, double v_y, double mass, RGBQUAD color);
+    Bubble(double x, double y, double radius, double v_x, double v_y, double mass, COLORREF color);
 
     void move(double time);
     MathVector2D<double> get_speed();
     
     void set_speed(double v_x, double v_y);
-    void set_speed(MathVector2D<double>& new_speed) {
-        speed = new_speed;
-    }
+    void set_speed(MathVector2D<double>& new_speed);
 
 private:    
     MathVector2D<double> speed;
@@ -133,11 +124,11 @@ public:
     void del_figure(const Shape* figure);
     void del_last();
 
-    Shape* get_figure(int pos) { return figures[pos]; };
-    int get_count() { return count; };
+    Shape* get_figure(int pos) const { return figures[pos]; };
+    int get_count() const { return count; };
 
-    void draw_all(const Renderer& renderer);
-    void move_all(double time);
+    void draw_all(const Renderer& renderer) const;
+    void move_all(double time) const;
 
 private:
     int count;
@@ -167,7 +158,6 @@ private:
 class Texture : public Window {
 public:
     Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y);
-    Texture();
     ~Texture();
 
     HDC get_hdc() const;
@@ -184,8 +174,8 @@ private:
 
 bool CheckCollision(const Bubble* lhs, const Bubble* rhs);
 void ProceedCollision(Bubble* lhs, Bubble* rhs);
-
 int CheckBounceWall(const Bubble* bubble, const Coordinates* coord);
-void ProceedBounceWall(Bubble bubble, int wall_type);
+void ProceedBounceWall(Bubble* bubble, const Coordinates* coord, int wall_type);
 
 void ProceedMoving(Manager& manager, Renderer& render);
+RGBQUAD ToRGBQUAD(COLORREF color);

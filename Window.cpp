@@ -1,5 +1,6 @@
 #include "sphere.h"
 
+/*
 Texture::Texture() : size(800, 600), coord(0, 0) {
     screen = txCreateDIBSection(800, 600, &buf_screen);
     Texture::color = TX_BLACK;
@@ -53,8 +54,7 @@ HDC Texture::get_hdc() const {
 RGBQUAD* Texture::get_buf() const {
     return buf_screen;
 };
-
-
+*/
 
 Window::Window(int x_size, int y_size) : size(x_size, y_size) {
     txCreateWindow(x_size, y_size);
@@ -92,23 +92,23 @@ void Renderer::set_window(Window* new_window) {
     scale.y = double(window->get_size_y()) / double(coord->get_max_y() - coord->get_min_y());    
 };
 
-void Renderer::draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color, int thickness) {
+void Renderer::draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color, int thickness) const {
     txSetColor(color, thickness, window->get_hdc());
     txLine(this->to_pixel_x(x_begin), this->to_pixel_y(y_begin),
            this->to_pixel_x(x_end), this->to_pixel_y(y_end), window->get_hdc());
 };
 
-void Renderer::set_pixel(double x, double y, COLORREF color) {
+void Renderer::set_pixel(double x, double y, COLORREF color) const {
     txSetPixel(this->to_pixel_x(x), this->to_pixel_y(y), color, window->get_hdc());
 };
 
-void Renderer::draw_circle(double x, double y, double r, COLORREF color, int thickness) {
+void Renderer::draw_circle(double x, double y, double r, COLORREF color, int thickness) const {
     txSetColor(color, thickness, window->get_hdc());
     txEllipse(this->to_pixel_x(x - r), this->to_pixel_y(y + r),
               this->to_pixel_x(x + r), this->to_pixel_y(y - r), window->get_hdc());
 };
 
-void Renderer::draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color, int thickness) {
+void Renderer::draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color, int thickness) const {
     txSetColor(color, thickness, window->get_hdc());
     txRectangle(this->to_pixel_x(x1), this->to_pixel_y(y1),
                 this->to_pixel_x(x2), this->to_pixel_y(y2), window->get_hdc());

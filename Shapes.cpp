@@ -1,12 +1,13 @@
 #include "sphere.h"
 
-Circle::Circle(double x, double y, double radius, RGBQUAD color) : 
+Circle::Circle(double x, double y, double radius, COLORREF color) : 
     Shape(x, y), radius(radius), color(color) {};
 
 void Circle::draw(const Renderer& renderer) const {
     Window* window = renderer.get_window();
     Coordinates* coordinates = renderer.get_coordinates(); 
     RGBQUAD* win_buf = window->get_buf();
+    RGBQUAD place_color = ToRGBQUAD(color);
 
     //fprintf(stderr, "here!");
 
@@ -24,7 +25,7 @@ void Circle::draw(const Renderer& renderer) const {
             if (this->check_bound(renderer.to_coord_x(ix), renderer.to_coord_y(iy)) &&
                 ix + iy * window->get_size_x() < window->get_size_x() * window->get_size_y()) {
                 //fprintf(stderr, "x: %d, y: %d\n", ix, iy);
-                win_buf[ix + iy * window->get_size_x()] = color;
+                win_buf[ix + iy * window->get_size_x()] = place_color;
             }
         }
     }
@@ -35,7 +36,7 @@ bool Circle::check_bound(double x, double y) const {
     return (((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y)) <= (radius * radius));
 };
 
-Bubble::Bubble(double x, double y, double radius, double v_x, double v_y, double mass, RGBQUAD color) :
+Bubble::Bubble(double x, double y, double radius, double v_x, double v_y, double mass, COLORREF color) :
     Circle(x, y, radius, color), speed(v_x, v_y), mass(mass) {};
 
 void Bubble::move(double time) {
@@ -51,6 +52,10 @@ void Bubble::set_speed(double v_x, double v_y) {
     speed.set_x(v_x);
     speed.set_y(v_y);
 };
+
+void Bubble::set_speed(MathVector2D<double>& new_speed) {
+    speed = new_speed;
+}
 
 bool CheckCollision(const Bubble* lhs, const Bubble* rhs) {
     double distance = (lhs->get_x() - rhs->get_x()) * (lhs->get_x() - rhs->get_x()) +
@@ -122,7 +127,7 @@ int CheckBounceWall(const Bubble* bubble, const Coordinates* coord) {
     return NO_WALL;
 }
 
-void ProceedBounceWall(Bubble* bubble, int wall_type) {
+void ProceedBounceWall(Bubble* bubble, const Coordinates* coord, int wall_type) {
     MathVector2D<double> curr_speed = bubble->get_speed();
 
     switch(wall_type) {
@@ -143,7 +148,10 @@ void ProceedBounceWall(Bubble* bubble, int wall_type) {
             break; 
     }
 
-    bubble->move(dt);
+    while(CheckBounceWall(bubble, coord) != NO_WALL) {
+        bubble->move(dt);
+    }
+
 };
 
 void CheckAllCollisions(Manager& manager, const Coordinates* coord) {
@@ -155,23 +163,16 @@ void CheckAllCollisions(Manager& manager, const Coordinates* coord) {
         //fprintf(stderr, "x: %lf, y: %lf\n", figure->get_x(), figure->get_y());
 
         if (wall_check != NO_WALL) {
-            ProceedBounceWall(figure, wall_check);
+            ProceedBounceWall(figure, coord, wall_check);
         }
 
-        bool is_collided = false;
         for (int j = 0; j < manager.get_count(); ++j) {
             Bubble* figure_coll = (Bubble*)manager.get_figure(j);
             if (i != j && CheckCollision(figure, figure_coll)) {
 
                 fprintf(stderr, "Collided lhs:%d, rhs:%d\n", i, j);
-
                 ProceedCollision(figure, figure_coll);
-                is_collided = true;
             }
-        }
-
-        if(is_collided) {
-            break;
         }
     }
 };
@@ -184,31 +185,16 @@ void ProceedMoving(Manager& manager, Renderer& render) {
     txBegin();
 
     while (!GetAsyncKeyState(VK_ESCAPE)) {
+        CheckAllCollisions(manager, render.get_coordinates());
         render.clear();
         manager.draw_all(render);
         manager.move_all(time);
-        CheckAllCollisions(manager, render.get_coordinates());
-        txSleep(50);
+        txSleep(30);
     }
     
     txEnd();
 };
 
-
-/*
-uint8_t GetB(uint32_t color)
-{
-    return color & 0xFF;
-}
-
-uint8_t GetG(uint32_t color)
-{
-    return (color >> kByteSize) & 0xFF;
-}
-
-uint8_t GetR(uint32_t color)
-{
-    return GetRValue(color);
-}
-
-*/
+RGBQUAD ToRGBQUAD(COLORREF color) {
+    return {GetBValue(color), GetGValue(color), GetRValue(color), 0};
+};

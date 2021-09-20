@@ -8,9 +8,9 @@ int main() {
     Renderer render(&main_window, &coord);
     Manager manager(10);
 
-    Bubble b1(1, 1, 0.5, 1, 2, 1, RGBQUAD {255, 255, 0, 0});
-    Bubble b2(3, 3, 1, 1, 3, 1, RGBQUAD {128, 128, 0, 0});
-    Bubble b3(7, 7, 1.5, 1, 4, 1, RGBQUAD {255, 0, 0, 0});
+    Bubble b1(1, 1, 0.5, 1, 2, 1, RGB(255, 255, 0));
+    Bubble b2(3, 3, 1, 1, 3, 1, RGB(128, 128, 0));
+    Bubble b3(7, 7, 1.5, 1, 4, 1, RGB(255, 0, 0));
     
     //b1.draw(render);
     //b2.draw(render);
