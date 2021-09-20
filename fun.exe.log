@@ -1,0 +1,130 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000043AA3E в функции ProceedCollision() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 69. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000561EA0 (64-bit), Flags: CMdRe0, Thread: 0x1EBC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043AA3E in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: ProceedCollision() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (69):
+
+     67: 
+     68:     double x1 = lhs->get_x(), y1 = lhs->get_y(); 
+=>   69:     double x2 = rhs->get_x(), y2 = rhs->get_y();
+     70:     double dist = lhs->get_radius() + rhs->get_radius();
+     71:     double cos = (y1 - y2) / dist, sin = (x2 - y1) / dist;
+
+# 1 0x000000000043AF70 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: CheckAllCollisions() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (136):
+
+    134:         }
+    135: 
+=>  136:         bool is_collided = false;
+    137:         for (int j = 0; j < manager.get_count(); ++j) {
+    138:             Bubble* figure_coll = (Bubble*)manager.get_figure(j);
+
+# 2 0x000000000043B019 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (154):
+
+    152: };
+    153: 
+=>  154: void ProceedMoving(Manager& manager, Renderer& render, MainWindow& window) {
+    155:     double time = 0.03;
+    156: 
+
+# 3 0x000000000041D54C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (23):
+
+     21:     manager.add_figure(&b3);
+     22: 
+=>   23:     ProceedMoving(manager, render, main_window);
+     24:     /*
+     25:     manager.draw_all(render);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 20 2021 00:36:56, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 20 2021 01:26:56
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe,
+
+ВНЕЗАПНО: signal (8, 0x00): SIGFPE: Грубая ошибка в вычислениях. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x000000000043AA3E в функции ProceedCollision() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 69. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000561EA0 (64-bit), Flags: CMdRe0, Thread: 0x1EBC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043AA3E in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: ProceedCollision() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (69):
+
+     67: 
+     68:     double x1 = lhs->get_x(), y1 = lhs->get_y(); 
+=>   69:     double x2 = rhs->get_x(), y2 = rhs->get_y();
+     70:     double dist = lhs->get_radius() + rhs->get_radius();
+     71:     double cos = (y1 - y2) / dist, sin = (x2 - y1) / dist;
+
+# 1 0x000000000043AF70 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: CheckAllCollisions() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (136):
+
+    134:         }
+    135: 
+=>  136:         bool is_collided = false;
+    137:         for (int j = 0; j < manager.get_count(); ++j) {
+    138:             Bubble* figure_coll = (Bubble*)manager.get_figure(j);
+
+# 2 0x000000000043B019 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (154):
+
+    152: };
+    153: 
+=>  154: void ProceedMoving(Manager& manager, Renderer& render, MainWindow& window) {
+    155:     double time = 0.03;
+    156: 
+
+# 3 0x000000000041D54C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (23):
+
+     21:     manager.add_figure(&b3);
+     22: 
+=>   23:     ProceedMoving(manager, render, main_window);
+     24:     /*
+     25:     manager.draw_all(render);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 20 2021 00:36:56, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 20 2021 01:26:55
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------

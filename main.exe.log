@@ -1,0 +1,70 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000041D32E в функции main(). Попытка прочесть данные по адресу NULL. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x000000000049F020 (64-bit), Flags: Cmdre0, Thread: 0x2F90 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041D32E in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 19 2021 12:00:10, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 19 2021 12:00:19
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000041D32E в функции main(). Попытка прочесть данные по адресу NULL. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x000000000049F020 (64-bit), Flags: Cmdre0, Thread: 0x2F90 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000041D32E in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe: main()
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 19 2021 12:00:10, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 19 2021 12:00:20
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\main.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
