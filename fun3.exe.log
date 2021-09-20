@@ -226,3 +226,117 @@ Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun
 Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000043A6B0 в функции draw() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 27. Попытка записать данные по адресу 0x00000000041A6000. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000561EA0 (64-bit), Flags: CMdRe0, Thread: 0x3FEC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043A6B0 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (27):
+
+     25: 
+     26: };
+=>   27: 
+     28: bool Circle::check_bound(double x, double y) const {
+     29:     return (((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y)) <= (radius * radius));
+
+# 2 0x000000000043B0F4 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (161):
+
+    159:         manager.move_all(time);
+    160:         txSleep(30);
+=>  161:     }
+    162:     
+    163:     txEnd();
+
+# 3 0x000000000041D54C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (23):
+
+     21:     manager.draw_all(render);
+     22:     render.show_on(main_window);
+=>   23:     render.clear();
+     24:     txSleep(1000);
+     25: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 20 2021 01:24:48, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 20 2021 15:30:48
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000043A6B0 в функции draw() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 27. Попытка записать данные по адресу 0x00000000041A6000. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000561EA0 (64-bit), Flags: CMdRe0, Thread: 0x3FEC (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043A6B0 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (27):
+
+     25: 
+     26: };
+=>   27: 
+     28: bool Circle::check_bound(double x, double y) const {
+     29:     return (((x - coord.x) * (x - coord.x) + (y - coord.y) * (y - coord.y)) <= (radius * radius));
+
+# 2 0x000000000043B0F4 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (161):
+
+    159:         manager.move_all(time);
+    160:         txSleep(30);
+=>  161:     }
+    162:     
+    163:     txEnd();
+
+# 3 0x000000000041D54C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (23):
+
+     21:     manager.draw_all(render);
+     22:     render.show_on(main_window);
+=>   23:     render.clear();
+     24:     txSleep(1000);
+     25: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 20 2021 01:24:48, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 20 2021 15:30:48
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\fun3.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------

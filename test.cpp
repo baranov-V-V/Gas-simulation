@@ -1,20 +1,15 @@
 #include "sphere.h"
 
 int main() {
-    Window main_window(850, 750);
+    Window main_window(850, 750, TX_WHITE);
     
-    //Window window(750, 750, TX_WHITE, 100, 0);
     Coordinates coord(0, 10, 0, 10);
     Renderer render(&main_window, &coord);
     Manager manager(10);
 
-    Bubble b1(1, 1, 0.5, 1, 2, 1, RGB(255, 255, 0));
-    Bubble b2(3, 3, 1, 1, 3, 1, RGB(128, 128, 0));
-    Bubble b3(7, 7, 1.5, 1, 4, 1, RGB(255, 0, 0));
-    
-    //b1.draw(render);
-    //b2.draw(render);
-    //b3.draw(render);
+    Bubble b1(1, 1, 0.5, 1, 1, 1, RGB(255, 255, 0));
+    Bubble b2(3, 3, 1, 6, 1, 2, RGB(128, 128, 0));
+    Bubble b3(7, 7, 1.5, 7, 3, 1, RGB(255, 0, 0));
 
     manager.add_figure(&b1);
     manager.add_figure(&b2);

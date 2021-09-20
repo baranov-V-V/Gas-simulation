@@ -9,22 +9,15 @@ void Circle::draw(const Renderer& renderer) const {
     RGBQUAD* win_buf = window->get_buf();
     RGBQUAD place_color = ToRGBQUAD(color);
 
-    //fprintf(stderr, "here!");
-
     int x1 = renderer.to_pixel_x(coord.x - radius);
     int x2 = renderer.to_pixel_x(coord.x + radius);
     int y1 = renderer.to_pixel_y(coord.y + radius);
     int y2 = renderer.to_pixel_y(coord.y - radius);
-
-    //fprintf(stderr, "x1: %d, y1: %d\nx2: %d, y2: %d\n", x1, y1, x2, y2);
-
-    //double abb = renderer.to_coord_x(x1);
     
     for(int iy = y2; iy < y1; ++iy) {
         for(int ix = x1; ix < x2; ++ix) {
             if (this->check_bound(renderer.to_coord_x(ix), renderer.to_coord_y(iy)) &&
                 ix + iy * window->get_size_x() < window->get_size_x() * window->get_size_y()) {
-                //fprintf(stderr, "x: %d, y: %d\n", ix, iy);
                 win_buf[ix + iy * window->get_size_x()] = place_color;
             }
         }
@@ -53,7 +46,7 @@ void Bubble::set_speed(double v_x, double v_y) {
     speed.set_y(v_y);
 };
 
-void Bubble::set_speed(MathVector2D<double>& new_speed) {
+void Bubble::set_speed(MathVector2D<double> new_speed) {
     speed = new_speed;
 }
 
@@ -78,26 +71,8 @@ void ProceedCollision(Bubble* lhs, Bubble* rhs) {
     MathVector2D<double> t(cos, sin);
     MathVector2D<double> n(sin, -cos);
 
-    MathVector2D<double> tmp1 = t * (v1 * t) + n * (v2 * n);
-    MathVector2D<double> tmp2 = t * (v2 * t) + n * (v1 * n);
-
-    lhs->set_speed(tmp1);
-    rhs->set_speed(tmp2);
-    
-    /*
-    double v1_x = cos * (v1 * t) + sin * (v2 * n);
-
-    fprintf(stderr, "v1_x: %lg, scalar_v1*t: %lg, scalar_v2*n: %lg\n", v1_x, (v1 * t), (v2 * n));
-    std::cerr << "v1_x: " << v1_x << "scalar_v1*t: " << v1 * t << "scalar_v2*n: " << v2 * n << "\n";
-    fprintf(stderr, "x1: %lg, y1: %lg\n", x1, y1);
-    fprintf(stderr, "x2: %lg, y2: %lg\n", x2, y2);
-
-    std::cerr << "cos: " << cos << " sin: " << sin << "\n";
-    std::cerr << "tmp1: " << tmp1 << " tmp2: " << tmp2 << "\n";
-
-    //lhs->set_speed((v1 * t) * cos + (v2 * n) * sin, (v1 * t) * sin - (v2 * n) * cos);
-    //rhs->set_speed((v2 * t) * cos + (v1 * n) * sin, (v2 * t) * sin - (v1 * n) * cos);
-    */
+    lhs->set_speed(t * (v1 * t) + n * (v2 * n));
+    rhs->set_speed(t * (v2 * t) + n * (v1 * n));   
 
     std::cerr << "final speed: lhs: " << lhs->get_speed() << " rhs: " << rhs->get_speed() << "\n";
 
@@ -105,7 +80,6 @@ void ProceedCollision(Bubble* lhs, Bubble* rhs) {
         lhs->move(dt);
         rhs->move(dt);
     }
-
 };
 
 int CheckBounceWall(const Bubble* bubble, const Coordinates* coord) {
@@ -156,21 +130,17 @@ void ProceedBounceWall(Bubble* bubble, const Coordinates* coord, int wall_type) 
 
 void CheckAllCollisions(Manager& manager, const Coordinates* coord) {
     for (int i = 0; i < manager.get_count(); ++i) {
-        Bubble* figure = (Bubble*)manager.get_figure(i);
+        Bubble* figure = (Bubble*) manager.get_figure(i);
         int wall_check = CheckBounceWall(figure, coord);
-        
-        //fprintf(stderr, "wall status: %d\n", wall_check);
-        //fprintf(stderr, "x: %lf, y: %lf\n", figure->get_x(), figure->get_y());
-
+    
         if (wall_check != NO_WALL) {
             ProceedBounceWall(figure, coord, wall_check);
         }
 
         for (int j = 0; j < manager.get_count(); ++j) {
             Bubble* figure_coll = (Bubble*)manager.get_figure(j);
-            if (i != j && CheckCollision(figure, figure_coll)) {
-
-                fprintf(stderr, "Collided lhs:%d, rhs:%d\n", i, j);
+            if (i != j && CheckCollision(figure, figure_coll)) {    
+                //fprintf(stderr, "Collided lhs:%d, rhs:%d\n", i, j);
                 ProceedCollision(figure, figure_coll);
             }
         }
@@ -180,8 +150,6 @@ void CheckAllCollisions(Manager& manager, const Coordinates* coord) {
 void ProceedMoving(Manager& manager, Renderer& render) {
     double time = dt;
 
-    //manager.draw_all(render);
-    //render.show_on(window);
     txBegin();
 
     while (!GetAsyncKeyState(VK_ESCAPE)) {

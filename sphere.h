@@ -26,6 +26,8 @@ public:
     T y;
 };
 
+
+
 class Coordinates {
 public:
     Coordinates(double min_x, double max_x, double min_y, double max_y) : max(max_x, max_y), min(min_x, min_y) {};
@@ -52,8 +54,6 @@ public:
     
     void set_coordinates(Coordinates* new_coordinates) { coordinates = new_coordinates; };
     Coordinates* get_coordinates() const {return coordinates; };
-
-    void show_on(Window* target) const;
     
     void clear() const;
     void draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color = TX_BLACK, int thickness = 1) const;
@@ -73,9 +73,10 @@ private:
     Pair<double> scale;
 };
 
+
+
 class Shape {
 public:
-    Shape();
     Shape(int x, int y) : coord(x, y) {};
     virtual void draw(const Renderer& renderer) const = 0;
 
@@ -108,12 +109,14 @@ public:
     MathVector2D<double> get_speed();
     
     void set_speed(double v_x, double v_y);
-    void set_speed(MathVector2D<double>& new_speed);
+    void set_speed(MathVector2D<double> new_speed);
 
 private:    
     MathVector2D<double> speed;
     double mass;
 };
+
+
 
 class Manager {
 public:
@@ -136,32 +139,42 @@ private:
     Shape** figures;
 };
 
-class Window {
+
+
+class BasicWindow {
 public:
-    Window(int x_size, int y_size);
-    
-    HDC get_hdc() const;
-    RGBQUAD* get_buf() const;
-    COLORREF get_color() const;
+    BasicWindow(int x_size, int y_size) : size(x_size, y_size) {};
 
     int get_size_x() const;
     int get_size_y() const;
 
 private:
+    Pair<int> size;
+};
+
+class Window : public BasicWindow {
+public:
+    Window(int x_size, int y_size, COLORREF color);
+    
+    HDC get_hdc() const;
+    RGBQUAD* get_buf() const;
+    COLORREF get_color() const;
+
+private:
     HDC screen;
     RGBQUAD* buf_screen;
-    Pair<int> size;
     COLORREF color;
 };
 
-
-class Texture : public Window {
+class Texture : public BasicWindow {
 public:
     Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y);
     ~Texture();
 
     HDC get_hdc() const;
-
+    RGBQUAD* get_buf() const;
+    COLORREF get_color() const;
+    
     int get_coord_x() const;
     int get_coord_y() const;
     
@@ -169,6 +182,9 @@ public:
 
 private:
     Pair<int> coord;
+    HDC screen;
+    RGBQUAD* buf_screen;
+    COLORREF color;
 };
 
 

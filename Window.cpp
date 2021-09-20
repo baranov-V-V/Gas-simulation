@@ -1,22 +1,23 @@
 #include "sphere.h"
 
-/*
-Texture::Texture() : size(800, 600), coord(0, 0) {
-    screen = txCreateDIBSection(800, 600, &buf_screen);
-    Texture::color = TX_BLACK;
+int BasicWindow::get_size_x() const {
+    return size.x;
+};
 
-    txSetFillColor(color, screen);
-    txRectangle(0, 0, size.x, size.y, screen);
-}
+int BasicWindow::get_size_y() const {
+    return size.y;
+};
+
+
 
 Texture::Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y) :
-    size(x_size, y_size), coord(coord_x, coord_y) {
+    BasicWindow(x_size, y_size), coord(coord_x, coord_y) {
     screen = txCreateDIBSection(x_size, y_size, &buf_screen);
     
     Texture::color = color;
-
+    
     txSetFillColor(color, screen);
-    txRectangle(0, 0, size.x, size.y, screen);
+    txRectangle(0, 0, x_size, y_size, screen);
 }
 
 Texture::~Texture() {
@@ -26,14 +27,6 @@ Texture::~Texture() {
 void Texture::show_on(const HDC& target) const {
     txBitBlt(target, coord.x, coord.y, 0, 0, screen);
 }
-
-int Texture::get_size_x() const {
-    return size.x;
-};
-
-int Texture::get_size_y() const {
-    return size.y;
-};
 
 int Texture::get_coord_x() const {
     return coord.x;
@@ -54,12 +47,16 @@ HDC Texture::get_hdc() const {
 RGBQUAD* Texture::get_buf() const {
     return buf_screen;
 };
-*/
 
-Window::Window(int x_size, int y_size) : size(x_size, y_size) {
+
+
+Window::Window(int x_size, int y_size, COLORREF color) : BasicWindow(x_size, y_size), color(color) {
     txCreateWindow(x_size, y_size);
     screen = txDC();
     buf_screen = txVideoMemory();
+
+    txSetFillColor(color, screen);
+    txRectangle(0, 0, x_size, y_size, screen);
 };
 
 HDC Window::get_hdc() const {
@@ -70,13 +67,10 @@ RGBQUAD* Window::get_buf() const {
     return buf_screen;
 };
 
-int Window::get_size_x() const {
-    return size.x;
-};
+COLORREF Window::get_color() const {
+    return color;
+}
 
-int Window::get_size_y() const {
-    return size.y;
-};
 
 
 Renderer::Renderer(Window* window, Coordinates* coord) :
@@ -129,12 +123,6 @@ double Renderer::to_coord_x(int x) const {
 double Renderer::to_coord_y(int y) const {
     return double(y) / scale.y + this->get_coordinates()->get_min_y();
 };
-
-/*
-void Renderer::show_on(Window* target) const {
-    ((Texture*)window)->show_on(target->get_hdc());
-};
-*/
 
 void Renderer::clear() const {
     txClear(window->get_hdc());
