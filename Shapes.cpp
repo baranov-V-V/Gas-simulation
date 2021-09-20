@@ -176,21 +176,22 @@ void CheckAllCollisions(Manager& manager, const Coordinates* coord) {
     }
 };
 
-void ProceedMoving(Manager& manager, Renderer& render, MainWindow& window) {
+void ProceedMoving(Manager& manager, Renderer& render) {
     double time = dt;
 
     //manager.draw_all(render);
     //render.show_on(window);
+    txBegin();
 
     while (!GetAsyncKeyState(VK_ESCAPE)) {
+        render.clear();
         manager.draw_all(render);
         manager.move_all(time);
-        render.show_on(window);
-        render.clear();
         CheckAllCollisions(manager, render.get_coordinates());
-        txSleep(30);
+        txSleep(50);
     }
     
+    txEnd();
 };
 
 
@@ -207,11 +208,7 @@ uint8_t GetG(uint32_t color)
 
 uint8_t GetR(uint32_t color)
 {
-    return (color >> (2 * kByteSize)) & 0xFF;
+    return GetRValue(color);
 }
 
-uint8_t GetA(uint32_t color)
-{
-    return (color >> (3 * kByteSize)) & 0xFF;
-}
 */

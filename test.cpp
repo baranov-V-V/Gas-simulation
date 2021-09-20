@@ -1,11 +1,11 @@
 #include "sphere.h"
 
 int main() {
-    MainWindow main_window(850, 750);
+    Window main_window(850, 750);
     
-    Window window(750, 750, TX_WHITE, 100, 0);
+    //Window window(750, 750, TX_WHITE, 100, 0);
     Coordinates coord(0, 10, 0, 10);
-    Renderer render(&window, &coord);
+    Renderer render(&main_window, &coord);
     Manager manager(10);
 
     Bubble b1(1, 1, 0.5, 1, 2, 1, RGBQUAD {255, 255, 0, 0});
@@ -20,7 +20,7 @@ int main() {
     manager.add_figure(&b2);
     manager.add_figure(&b3);
 
-    ProceedMoving(manager, render, main_window);
+    ProceedMoving(manager, render);
     
     /*
     manager.draw_all(render);

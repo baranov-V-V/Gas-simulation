@@ -1,80 +1,80 @@
 #include "sphere.h"
 
-Window::Window() : size(800, 600), coord(0, 0) {
+Texture::Texture() : size(800, 600), coord(0, 0) {
     screen = txCreateDIBSection(800, 600, &buf_screen);
-    Window::color = TX_BLACK;
+    Texture::color = TX_BLACK;
 
     txSetFillColor(color, screen);
     txRectangle(0, 0, size.x, size.y, screen);
 }
 
-Window::Window(int x_size, int y_size, COLORREF color, int coord_x, int coord_y) :
+Texture::Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y) :
     size(x_size, y_size), coord(coord_x, coord_y) {
     screen = txCreateDIBSection(x_size, y_size, &buf_screen);
     
-    Window::color = color;
+    Texture::color = color;
 
     txSetFillColor(color, screen);
     txRectangle(0, 0, size.x, size.y, screen);
 }
 
-Window::~Window() {
+Texture::~Texture() {
     txDeleteDC(screen);
 }
 
-void Window::show_on(const HDC& target) const {
+void Texture::show_on(const HDC& target) const {
     txBitBlt(target, coord.x, coord.y, 0, 0, screen);
 }
+
+int Texture::get_size_x() const {
+    return size.x;
+};
+
+int Texture::get_size_y() const {
+    return size.y;
+};
+
+int Texture::get_coord_x() const {
+    return coord.x;
+};
+
+int Texture::get_coord_y() const {
+    return coord.x;
+};
+
+COLORREF Texture::get_color() const {
+    return color;
+};
+
+HDC Texture::get_hdc() const {
+    return screen;
+}
+
+RGBQUAD* Texture::get_buf() const {
+    return buf_screen;
+};
+
+
+
+Window::Window(int x_size, int y_size) : size(x_size, y_size) {
+    txCreateWindow(x_size, y_size);
+    screen = txDC();
+    buf_screen = txVideoMemory();
+};
+
+HDC Window::get_hdc() const {
+    return screen;
+};
+
+RGBQUAD* Window::get_buf() const {
+    return buf_screen;
+};
 
 int Window::get_size_x() const {
     return size.x;
 };
 
 int Window::get_size_y() const {
-    return size.y;
-};
-
-int Window::get_coord_x() const {
-    return coord.x;
-};
-
-int Window::get_coord_y() const {
-    return coord.x;
-};
-
-COLORREF Window::get_color() const {
-    return color;
-};
-
-HDC Window::get_hdc() const {
-    return screen;
-}
-
-RGBQUAD* Window::get_buf() const {
-    return buf_screen;
-};
-
-
-
-MainWindow::MainWindow(int x_size, int y_size) : size(x_size, y_size) {
-    txCreateWindow(x_size, y_size);
-    screen = txDC();
-    buf_screen = txVideoMemory();
-};
-
-HDC MainWindow::get_hdc() const {
-    return screen;
-};
-
-RGBQUAD* MainWindow::get_buf() const {
-    return buf_screen;
-};
-
-int MainWindow::get_size_x() const {
-    return size.x;
-};
-
-int MainWindow::get_size_y() const {
     return size.y;
 };
 
@@ -130,9 +130,11 @@ double Renderer::to_coord_y(int y) const {
     return double(y) / scale.y + this->get_coordinates()->get_min_y();
 };
 
-void Renderer::show_on(const MainWindow& target) const {
-    window->show_on(target.get_hdc());
+/*
+void Renderer::show_on(Window* target) const {
+    ((Texture*)window)->show_on(target->get_hdc());
 };
+*/
 
 void Renderer::clear() const {
     txClear(window->get_hdc());

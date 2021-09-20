@@ -15,6 +15,7 @@ enum WALLS {
 class Window;
 class Renderer;
 class MainWindow;
+class BasicWindow;
 
 template <typename T>
 class Pair {
@@ -54,7 +55,7 @@ public:
     Coordinates* get_coordinates() {return coordinates; };
     Coordinates* get_coordinates() const {return coordinates; };
 
-    void show_on(const MainWindow& target) const;
+    void show_on(Window* target) const;
     
     void clear() const;
     void draw_line(double x_begin, double y_begin, double x_end, double y_end, COLORREF color = TX_BLACK, int thickness = 1);
@@ -146,44 +147,40 @@ private:
 
 class Window {
 public:
-    Window(int x_size, int y_size, COLORREF color, int coord_x, int coord_y);
-    Window();
-    ~Window();
-
-    HDC get_hdc() const;
+    Window(int x_size, int y_size);
     
+    HDC get_hdc() const;
+    RGBQUAD* get_buf() const;
+    COLORREF get_color() const;
+
     int get_size_x() const;
     int get_size_y() const;
+
+private:
+    HDC screen;
+    RGBQUAD* buf_screen;
+    Pair<int> size;
+    COLORREF color;
+};
+
+
+class Texture : public Window {
+public:
+    Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y);
+    Texture();
+    ~Texture();
+
+    HDC get_hdc() const;
+
     int get_coord_x() const;
     int get_coord_y() const;
-    COLORREF get_color() const;
-    RGBQUAD* get_buf() const;
-
+    
     void show_on(const HDC& target) const;
 
 private:
-    HDC screen;
-    RGBQUAD* buf_screen;
-    COLORREF color;
-    Pair<int> size;
     Pair<int> coord;
 };
 
-class MainWindow {
-public:
-    MainWindow(int x_size, int y_size);
-
-    HDC get_hdc() const;
-    RGBQUAD* get_buf() const;
-
-    int get_size_x() const;
-    int get_size_y() const;
-
-private:
-    HDC screen;
-    RGBQUAD* buf_screen;
-    Pair<int> size;
-};
 
 bool CheckCollision(const Bubble* lhs, const Bubble* rhs);
 void ProceedCollision(Bubble* lhs, Bubble* rhs);
@@ -191,4 +188,4 @@ void ProceedCollision(Bubble* lhs, Bubble* rhs);
 int CheckBounceWall(const Bubble* bubble, const Coordinates* coord);
 void ProceedBounceWall(Bubble bubble, int wall_type);
 
-void ProceedMoving(Manager& manager, Renderer& render, MainWindow& window);
+void ProceedMoving(Manager& manager, Renderer& render);
