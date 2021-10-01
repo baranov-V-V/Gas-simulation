@@ -1,7 +1,7 @@
 #include "sphere.h"
 
 Manager::Manager(int max_count) : size(max_count), count(0) {
-    Manager::figures = (Shape**) calloc(max_count, sizeof(Shape*));
+    Manager::figures = (PhysShape**) calloc(max_count, sizeof(PhysShape*));
 };
 
 Manager::~Manager() {
@@ -14,13 +14,13 @@ void Manager::draw_all(const Renderer& renderer) const {
     }
 };
 
-void Manager::add_figure(Shape* figure) {
+void Manager::add_figure(PhysShape* figure) {
     if (count < size) {
         figures[count++] = figure;
     }
 };
 
-void Manager::del_figure(const Shape* figure) {
+void Manager::del_figure(const PhysShape* figure) {
     int pos = 0;
     for (int i = 0; i < count; ++i) {
         if (figures[i] == figure) {
@@ -29,6 +29,7 @@ void Manager::del_figure(const Shape* figure) {
             }
             count--;
             break;
+            delete figure;
         }
     }
 };
@@ -39,6 +40,6 @@ void Manager::del_last() {
 
 void Manager::move_all(double time) const {
     for (int i = 0; i < count; ++i) {
-       ((Bubble*)figures[i])->move(time);
+        (figures[i])->move(time);
     } 
-}
+};

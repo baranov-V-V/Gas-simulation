@@ -2108,3 +2108,1055 @@ Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\tes
 Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DD6C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x2E8C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DD6C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E272 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A525 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E87 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043ACE5 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (119):
+
+    117:         render.clear();
+    118:         manager.draw_all(render);
+=>  119:         manager.move_all(time);
+    120:         txSleep(30);
+    121:     }
+
+# 5 0x000000000041D4CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (18):
+
+     16:     manager.add_figure(&b3);
+     17: 
+=>   18:     ProceedMoving(manager, render);
+     19:     
+     20:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 17:32:20, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 17:32:28
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DD6C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x2E8C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DD6C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E272 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A525 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E87 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043ACE5 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (119):
+
+    117:         render.clear();
+    118:         manager.draw_all(render);
+=>  119:         manager.move_all(time);
+    120:         txSleep(30);
+    121:     }
+
+# 5 0x000000000041D4CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (18):
+
+     16:     manager.add_figure(&b3);
+     17: 
+=>   18:     ProceedMoving(manager, render);
+     19:     
+     20:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 17:32:20, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 17:32:29
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DD6C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x4BF4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DD6C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E272 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A525 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E87 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043ACE5 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (119):
+
+    117:         render.clear();
+    118:         manager.draw_all(render);
+=>  119:         manager.move_all(time);
+    120:         txSleep(30);
+    121:     }
+
+# 5 0x000000000041D4CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (18):
+
+     16:     manager.add_figure(&b1);
+     17:     manager.add_figure(&b2);
+=>   18:     manager.add_figure(&b3);
+     19:     manager.add_figure(&r1);
+     20:     manager.add_figure(&r2);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 17:34:20, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 17:35:47
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DD6C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x4BF4 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DD6C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E272 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A525 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E87 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043ACE5 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (119):
+
+    117:         render.clear();
+    118:         manager.draw_all(render);
+=>  119:         manager.move_all(time);
+    120:         txSleep(30);
+    121:     }
+
+# 5 0x000000000041D4CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (18):
+
+     16:     manager.add_figure(&b1);
+     17:     manager.add_figure(&b2);
+=>   18:     manager.add_figure(&b3);
+     19:     manager.add_figure(&r1);
+     20:     manager.add_figure(&r2);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 17:34:20, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 17:35:47
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DF0C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 59. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x3C24 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DF0C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (59):
+
+     57:     
+     58:     double get_max_x() const {return max.x;};    
+=>   59:     double get_min_x() const {return min.x;};
+     60:     double get_max_y() const {return max.y;};    
+     61:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E4D2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A625 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000458027 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043AE82 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (129):
+
+    127:         render.clear();
+    128:         manager.draw_all(render);
+=>  129:         manager.move_all(time);
+    130:         txSleep(30);
+    131:     }
+
+# 5 0x000000000041D5CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 18:11:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 18:11:14
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DF0C в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 59. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x3C24 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DF0C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (59):
+
+     57:     
+     58:     double get_max_x() const {return max.x;};    
+=>   59:     double get_min_x() const {return min.x;};
+     60:     double get_max_y() const {return max.y;};    
+     61:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E4D2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A625 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000458027 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043AE82 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (129):
+
+    127:         render.clear();
+    128:         manager.draw_all(render);
+=>  129:         manager.move_all(time);
+    130:         txSleep(30);
+    131:     }
+
+# 5 0x000000000041D5CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 22 2021 18:11:01, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 22 2021 18:11:14
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DCEC в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x40D8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DCEC in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E2B2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A435 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E07 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043AC5F in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (129):
+
+    127:         render.clear();
+    128:         manager.draw_all(render);
+=>  129:         manager.move_all(time);
+    130:         txSleep(30);
+    131:     }
+
+# 5 0x000000000041D3E2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     //manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 02:34:00, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 02:34:10
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049DCEC в функции get_min_x() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 60. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x40D8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049DCEC in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_min_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (60):
+
+     58:     
+     59:     double get_max_x() const {return max.x;};    
+=>   60:     double get_min_x() const {return min.x;};
+     61:     double get_max_y() const {return max.y;};    
+     62:     double get_min_y() const {return min.y;};
+
+# 1 0x000000000049E2B2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: to_pixel_x() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Window.cpp (112):
+
+    110: 
+    111: inline int Renderer::to_pixel_x(double coord) const {
+=>  112:     return (coord - this->get_coordinates()->get_min_x()) * scale.x;
+    113: };
+    114: 
+
+# 2 0x000000000043A435 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (14):
+
+     12:     RGBQUAD place_color = ToRGBQUAD(color);
+     13: 
+=>   14:     int x1 = renderer.to_pixel_x(coord.x - radius);
+     15:     int x2 = renderer.to_pixel_x(coord.x + radius);
+     16:     int y1 = renderer.to_pixel_y(coord.y + radius);
+
+# 3 0x0000000000457E07 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: move_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (42):
+
+     40: void Manager::move_all(double time) const {
+     41:     for (int i = 0; i < count; ++i) {
+=>   42:        ((BasicPhys*)figures[i])->move(time);
+     43:     } 
+     44: };
+
+# 4 0x000000000043AC5F in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (129):
+
+    127:         render.clear();
+    128:         manager.draw_all(render);
+=>  129:         manager.move_all(time);
+    130:         txSleep(30);
+    131:     }
+
+# 5 0x000000000041D3E2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     //manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 02:34:00, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 02:34:11
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049E21C в функции get_window() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 76. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x2A3C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049E21C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_window() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (76):
+
+     74: 
+     75:     void set_window(Window* new_window);
+=>   76:     Window* get_window() const { return window; };
+     77:     
+     78:     void set_coordinates(Coordinates* new_coordinates) { coordinates = new_coordinates; };
+
+# 1 0x000000000043A366 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (11):
+
+      9: 
+     10: void PhysCircle::draw(const Renderer& renderer) const {
+=>   11:     Window* window = renderer.get_window();
+     12:     Coordinates* coordinates = renderer.get_coordinates(); 
+     13:     RGBQUAD* win_buf = window->get_buf();
+
+# 2 0x0000000000493852 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedWall() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Collision.cpp (153):
+
+    151:     }
+    152: 
+=>  153:     object->move(dt);
+    154: };
+
+# 3 0x000000000043AAD2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: CheckAllCollisions() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (104):
+
+    102:     
+    103:         if (wall_check != NO_WALL) {
+=>  104:             ProceedWall((BasicPhys*) figure, coord, wall_check);
+    105:         }
+    106: 
+
+# 4 0x000000000043AB49 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (126):
+
+    124: 
+    125:     while (!GetAsyncKeyState(VK_ESCAPE)) {
+=>  126:         CheckAllCollisions(manager, render.get_coordinates());
+    127:         render.clear();
+    128:         manager.draw_all(render);
+
+# 5 0x000000000041D3E2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     //manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 20:10:14, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 20:10:25
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000049E21C в функции get_window() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h на строке 76. Попытка прочесть данные по адресу 0xFFFFFFFFFFFFFFFF. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x2A3C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000049E21C in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: get_window() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/sphere.h (76):
+
+     74: 
+     75:     void set_window(Window* new_window);
+=>   76:     Window* get_window() const { return window; };
+     77:     
+     78:     void set_coordinates(Coordinates* new_coordinates) { coordinates = new_coordinates; };
+
+# 1 0x000000000043A366 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (11):
+
+      9: 
+     10: void PhysCircle::draw(const Renderer& renderer) const {
+=>   11:     Window* window = renderer.get_window();
+     12:     Coordinates* coordinates = renderer.get_coordinates(); 
+     13:     RGBQUAD* win_buf = window->get_buf();
+
+# 2 0x0000000000493852 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedWall() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Collision.cpp (153):
+
+    151:     }
+    152: 
+=>  153:     object->move(dt);
+    154: };
+
+# 3 0x000000000043AAD2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: CheckAllCollisions() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (104):
+
+    102:     
+    103:         if (wall_check != NO_WALL) {
+=>  104:             ProceedWall((BasicPhys*) figure, coord, wall_check);
+    105:         }
+    106: 
+
+# 4 0x000000000043AB49 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (126):
+
+    124: 
+    125:     while (!GetAsyncKeyState(VK_ESCAPE)) {
+=>  126:         CheckAllCollisions(manager, render.get_coordinates());
+    127:         render.clear();
+    128:         manager.draw_all(render);
+
+# 5 0x000000000041D3E2 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     //manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 20:10:14, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 20:10:25
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000043A702 в функции draw() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 25. Попытка записать данные по адресу 0x000000000321BF60. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x228 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043A702 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (25):
+
+     23:             if (this->check_bound(renderer.to_coord_x(ix), renderer.to_coord_y(iy)) &&
+     24:                 ix + iy * window->get_size_x() < window->get_size_x() * window->get_size_y()) {
+=>   25:                 win_buf[ix + iy * window->get_size_x()] = place_color;
+     26:             }
+     27:         }
+
+# 1 0x0000000000457D5F in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (13):
+
+     11: void Manager::draw_all(const Renderer& renderer) const {
+     12:     for (int i = 0; i < count; ++i) {
+=>   13:         figures[i]->draw(renderer);
+     14:     }
+     15: };
+
+# 2 0x000000000043AD55 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (128):
+
+    126:         CheckAllCollisions(manager, render.get_coordinates());
+    127:         render.clear();
+=>  128:         manager.draw_all(render);
+    129:         manager.move_all(time);
+    130:         txSleep(30);
+
+# 3 0x000000000041D5CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 20:56:55, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 20:57:29
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x000000000043A702 в функции draw() в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp на строке 25. Попытка записать данные по адресу 0x000000000321BF60. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000005C25E0 (64-bit), Flags: Cmdre0, Thread: 0x228 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x000000000043A702 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (25):
+
+     23:             if (this->check_bound(renderer.to_coord_x(ix), renderer.to_coord_y(iy)) &&
+     24:                 ix + iy * window->get_size_x() < window->get_size_x() * window->get_size_y()) {
+=>   25:                 win_buf[ix + iy * window->get_size_x()] = place_color;
+     26:             }
+     27:         }
+
+# 1 0x0000000000457D5F in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: draw_all() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Manager.cpp (13):
+
+     11: void Manager::draw_all(const Renderer& renderer) const {
+     12:     for (int i = 0; i < count; ++i) {
+=>   13:         figures[i]->draw(renderer);
+     14:     }
+     15: };
+
+# 2 0x000000000043AD55 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: ProceedMoving() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Shapes.cpp (128):
+
+    126:         CheckAllCollisions(manager, render.get_coordinates());
+    127:         render.clear();
+=>  128:         manager.draw_all(render);
+    129:         manager.move_all(time);
+    130:         txSleep(30);
+
+# 3 0x000000000041D5CF in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (24):
+
+     22:     manager.add_figure(&r2);
+     23: 
+=>   24:     ProceedMoving(manager, render);
+     25:     
+     26:     /*
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Sep 24 2021 20:56:55, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Sep 24 2021 20:57:29
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: #1: Куча была повреждена. (0xC0000374) при выполнении кода по адресу 0x00007FFF2428F199 в функции RtlIsZeroMemory(). Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+Ой, всё (EXCEPTION_NONCONTINUABLE).
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000623D20 (64-bit), Flags: Cmdre0, Thread: 0x32E8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FFF2428F199 in C:\Windows\SYSTEM32\ntdll.dll: RtlIsZeroMemory()
+# 1 0x00007FFF2428F163 in C:\Windows\SYSTEM32\ntdll.dll: RtlIsZeroMemory()
+# 2 0x00007FFF24297EE2 in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 3 0x00007FFF242981CA in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 4 0x00007FFF2429DE51 in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 5 0x00007FFF241B5BF0 in C:\Windows\SYSTEM32\ntdll.dll: RtlGetCurrentServiceSessionId()
+# 6 0x00007FFF241B47B1 in C:\Windows\SYSTEM32\ntdll.dll: RtlFreeHeap()
+# 7 0x00007FFF23BD9C9C in C:\Windows\System32\msvcrt.dll: free()
+
+# 8 0x00000000004B100B in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp (44):
+
+     42: 
+     43: Graph::~Graph() {
+=>   44:     delete[] Graph::dots;
+     45: };
+     46: 
+
+# 9 0x000000000041D80A in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (29):
+
+     27:     Texture graph_texture(600, 150, TX_BLUE, 0, 600);
+     28:     Renderer graph_render(&graph_texture, &graph_coord);
+=>   29:     Graph graph(dots, 5);
+     30: 
+     31:     double time = dt;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Oct  1 2021 23:20:07, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Oct 01 2021 23:20:15
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: #1: Куча была повреждена. (0xC0000374) при выполнении кода по адресу 0x00007FFF2428F199 в функции RtlIsZeroMemory(). Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+Ой, всё (EXCEPTION_NONCONTINUABLE).
+
+С помощью функции _set_se_translator() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x0000000000623D20 (64-bit), Flags: Cmdre0, Thread: 0x32E8 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00007FFF2428F199 in C:\Windows\SYSTEM32\ntdll.dll: RtlIsZeroMemory()
+# 1 0x00007FFF2428F163 in C:\Windows\SYSTEM32\ntdll.dll: RtlIsZeroMemory()
+# 2 0x00007FFF24297EE2 in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 3 0x00007FFF242981CA in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 4 0x00007FFF2429DE51 in C:\Windows\SYSTEM32\ntdll.dll: RtlpNtSetValueKey()
+# 5 0x00007FFF241B5BF0 in C:\Windows\SYSTEM32\ntdll.dll: RtlGetCurrentServiceSessionId()
+# 6 0x00007FFF241B47B1 in C:\Windows\SYSTEM32\ntdll.dll: RtlFreeHeap()
+# 7 0x00007FFF23BD9C9C in C:\Windows\System32\msvcrt.dll: free()
+
+# 8 0x00000000004B100B in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp (44):
+
+     42: 
+     43: Graph::~Graph() {
+=>   44:     delete[] Graph::dots;
+     45: };
+     46: 
+
+# 9 0x000000000041D80A in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (29):
+
+     27:     Texture graph_texture(600, 150, TX_BLUE, 0, 600);
+     28:     Renderer graph_render(&graph_texture, &graph_coord);
+=>   29:     Graph graph(dots, 5);
+     30: 
+     31:     double time = dt;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Oct  1 2021 23:20:07, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Oct 01 2021 23:20:15
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------

@@ -1,20 +1,26 @@
 #include "sphere.h"
 
-int BasicWindow::get_size_x() const {
+int Frame::get_size_x() const {
     return size.x;
 };
 
-int BasicWindow::get_size_y() const {
+int Frame::get_size_y() const {
     return size.y;
 };
 
-
+Window::Window(int x_size, int y_size, COLORREF color) : VirtualWindow(x_size, y_size, color) {    
+    txCreateWindow(x_size, y_size);
+    screen = txDC();
+    buf_screen = txVideoMemory();
+    
+    txSetFillColor(color, screen);
+    txRectangle(0, 0, x_size, y_size, screen);
+};
 
 Texture::Texture(int x_size, int y_size, COLORREF color, int coord_x, int coord_y) :
-    BasicWindow(x_size, y_size), coord(coord_x, coord_y) {
-    screen = txCreateDIBSection(x_size, y_size, &buf_screen);
+    VirtualWindow(x_size, y_size, color), coord(coord_x, coord_y) {
     
-    Texture::color = color;
+    screen = txCreateDIBSection(x_size, y_size, &buf_screen);
     
     txSetFillColor(color, screen);
     txRectangle(0, 0, x_size, y_size, screen);
@@ -36,50 +42,33 @@ int Texture::get_coord_y() const {
     return coord.x;
 };
 
-COLORREF Texture::get_color() const {
-    return color;
+
+VirtualWindow::VirtualWindow(int x_size, int y_size, COLORREF color) : Frame(x_size, y_size), color(color) {
+    screen = nullptr;
+    buf_screen = nullptr;
 };
 
-HDC Texture::get_hdc() const {
-    return screen;
-}
-
-RGBQUAD* Texture::get_buf() const {
-    return buf_screen;
-};
-
-
-
-Window::Window(int x_size, int y_size, COLORREF color) : BasicWindow(x_size, y_size), color(color) {
-    txCreateWindow(x_size, y_size);
-    screen = txDC();
-    buf_screen = txVideoMemory();
-
-    txSetFillColor(color, screen);
-    txRectangle(0, 0, x_size, y_size, screen);
-};
-
-HDC Window::get_hdc() const {
+HDC VirtualWindow::get_hdc() const {
     return screen;
 };
 
-RGBQUAD* Window::get_buf() const {
+RGBQUAD* VirtualWindow::get_buf() const {
     return buf_screen;
 };
 
-COLORREF Window::get_color() const {
+COLORREF VirtualWindow::get_color() const {
     return color;
 }
 
 
 
-Renderer::Renderer(Window* window, Coordinates* coord) :
+Renderer::Renderer(VirtualWindow* window, Coordinates* coord) :
     window(window), coordinates(coord) {
     scale.x = double(window->get_size_x()) / double(coord->get_max_x() - coord->get_min_x());
     scale.y = double(window->get_size_y()) / double(coord->get_max_y() - coord->get_min_y());    
 };
 
-void Renderer::set_window(Window* new_window) {
+void Renderer::set_window(VirtualWindow* new_window) {
     window = new_window;
     Coordinates* coord = this->get_coordinates();
     scale.x = double(window->get_size_x()) / double(coord->get_max_x() - coord->get_min_x());
@@ -103,7 +92,8 @@ void Renderer::draw_circle(double x, double y, double r, COLORREF color, int thi
 };
 
 void Renderer::draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color, int thickness) const {
-    txSetColor(color, thickness, window->get_hdc());
+    txSetColor(color, thickness,
+    window->get_hdc());
     txRectangle(this->to_pixel_x(x1), this->to_pixel_y(y1),
                 this->to_pixel_x(x2), this->to_pixel_y(y2), window->get_hdc());
 };
