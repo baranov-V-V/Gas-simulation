@@ -58,40 +58,24 @@ void CheckCollision_CC(PhysShape* p_lhs, PhysShape* p_rhs, Manager& manager) {
 };
 
 bool Test_CR(PhysCircle* lhs, PhysRect* rhs) {
-    return ((abs(rhs->get_x() - lhs->get_x() - lhs->get_radius()) < (rhs->get_size_x() / 2)) ||
+    return ((abs(rhs->get_x() - lhs->get_radius() - lhs->get_x()) < (rhs->get_size_x() / 2)) ||
             (abs(lhs->get_x() - lhs->get_radius() - rhs->get_x()) < (rhs->get_size_x() / 2))) && 
            ((abs(lhs->get_y() - lhs->get_radius() - rhs->get_y()) < (rhs->get_size_y() / 2)) ||
             (abs(rhs->get_y() - lhs->get_radius() - lhs->get_y()) < (rhs->get_size_y() / 2)));
 };
 
-void CheckCollision_CR(PhysShape* p_lhs, PhysShape* p_rhs) {
+void CheckCollision_CR(PhysShape* p_lhs, PhysShape* p_rhs, Manager& manager) {
     PhysCircle* lhs = (PhysCircle*) p_lhs;
     PhysRect* rhs = (PhysRect*) p_rhs;
 
     if (Test_CR(lhs, rhs)) {
-        MathVector2D<double> v1 = lhs->get_speed();
-        MathVector2D<double> v2 = rhs->get_speed();
-
-        double x1 = lhs->get_x(), y1 = lhs->get_y(); 
-        double x2 = rhs->get_x(), y2 = rhs->get_y();
-        double dist = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-        double cos = (y1 - y2) / dist, sin = (x2 - x1) / dist;
-
-        MathVector2D<double> t(cos, sin);
-        MathVector2D<double> n(sin, -cos);
-
-        lhs->set_speed(t * (v1 * t) + n * (v2 * n));
-        rhs->set_speed(t * (v2 * t) + n * (v1 * n));
-
-        while(Test_CR(lhs, rhs)) {  
-            lhs->move(dt);
-            rhs->move(dt);
-        }
+        rhs->set_mass(rhs->get_mass() + lhs->get_mass());
+        manager.del_figure(lhs);
     }
 };
 
-void CheckCollision_RC(PhysShape* lhs, PhysShape* rhs) {
-    CheckCollision_CR(rhs, lhs);
+void CheckCollision_RC(PhysShape* lhs, PhysShape* rhs, Manager& manager) {
+    CheckCollision_CR(rhs, lhs, manager);
 };
 
 bool Test_RR(PhysRect* lhs, PhysRect* rhs) {
@@ -101,14 +85,26 @@ bool Test_RR(PhysRect* lhs, PhysRect* rhs) {
             (abs(rhs->get_y() - lhs->get_y2()) < (rhs->get_size_y() / 2)));
 }
 
-void CheckCollision_RR(PhysShape* p_lhs, PhysShape* p_rhs) {
+void CheckCollision_RR(PhysShape* p_lhs, PhysShape* p_rhs, Manager& manager) {
     PhysRect* lhs = (PhysRect*) p_lhs;
     PhysRect* rhs = (PhysRect*) p_rhs;
     
     if (Test_RR(lhs, rhs)) {
         //fprintf(stderr, "collided %p with %p\n", lhs, rhs);
+        
+        int count = lhs->get_mass() + rhs->get_mass();
         MathVector2D<double> v1 = lhs->get_speed();
         MathVector2D<double> v2 = rhs->get_speed();
+
+        double max_v_x = v1.get_x() + v2.get_x();
+        double max_v_y = v1.get_y() + v2.get_y();
+
+        manager.del_figure(lhs);
+        manager.del_figure(rhs);
+
+        for (int i = 0; i < count; ++i) {
+            PhysCircle* tmp = new PhysCircle();
+        }   
 
         double x1 = lhs->get_x(), y1 = lhs->get_y(); 
         double x2 = rhs->get_x(), y2 = rhs->get_y();
@@ -125,7 +121,7 @@ void CheckCollision_RR(PhysShape* p_lhs, PhysShape* p_rhs) {
             lhs->move(dt);
             rhs->move(dt);
         }
-
+        
         //fprintf(stderr, "end collision!\n");
     }
 };

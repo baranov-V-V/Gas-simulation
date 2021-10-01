@@ -2,6 +2,8 @@
 #include <cmath>
 #include "MathVector2D.h"
 
+using std::rand;
+
 const double dt = 0.03;
 
 
@@ -109,6 +111,7 @@ class BasicPhys {
     void set_speed(double v_x, double v_y);
     void set_speed(MathVector2D<double> new_speed);
     double get_mass() const { return mass; };
+    double set_mass(double new_mass) { mass = new_mass; }; 
 
   protected:
     MathVector2D<double> speed;
@@ -193,6 +196,7 @@ class PhysRect: public PhysShape {
   public:
     virtual void draw(const Renderer& renderer) const override;
     PhysRect(double x1, double y1, double x2, double y2, double v_x, double v_y, double mass, COLORREF color);
+    PhysRect();
     void move(double time) override;
     
     double get_x1() const { return coord1.x; };
@@ -255,7 +259,7 @@ class Frame {
     int get_size_x() const;
     int get_size_y() const;
 
-  private:
+  protected:
     Pair<int> size;
 };
 
@@ -303,13 +307,14 @@ class Button : public Frame {
     
     virtual void draw(const Renderer& render) const = 0;
 
-  private:
+  protected:
     Pair<int> coord;
 };
 
 class TextButton : public Button {
   public:
     TextButton(int x_size, int y_size, int x, int y, COLORREF color, char* text);
+    TextButton();
     TextButton(const TextButton&);
     ~TextButton();
     //TextButton& operator=(const TextButton& source);
@@ -376,10 +381,10 @@ void ProceedMoving(Manager& manager, Renderer& render);
 
 RGBQUAD ToRGBQUAD(COLORREF color);
 
-void CheckCollision_CC(PhysShape* lhs, PhysShape* rhs);
-void CheckCollision_CR(PhysShape* lhs, PhysShape* rhs);
-void CheckCollision_RC(PhysShape* lhs, PhysShape* rhs);
-void CheckCollision_RR(PhysShape* lhs, PhysShape* rhs);
+void CheckCollision_CC(PhysShape* lhs, PhysShape* rhs, Manager& manager);
+void CheckCollision_CR(PhysShape* lhs, PhysShape* rhs, Manager& manager);
+void CheckCollision_RC(PhysShape* lhs, PhysShape* rhs, Manager& manager);
+void CheckCollision_RR(PhysShape* lhs, PhysShape* rhs, Manager& manager);
 
 void ProceedCollision(PhysCircle* lhs, PhysCircle* rhs);
 int CheckWall_C(PhysShape* object, const Coordinates* coord);

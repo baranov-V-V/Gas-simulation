@@ -5,6 +5,9 @@ Manager::Manager(int max_count) : size(max_count), count(0) {
 };
 
 Manager::~Manager() {
+    for (int i = 0; i < count; ++i) {
+        this->del_last();
+    }
     free(figures);
 };
 

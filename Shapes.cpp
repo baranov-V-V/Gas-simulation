@@ -79,6 +79,10 @@ PhysRect::PhysRect(double x1, double y1, double x2, double y2, double v_x, doubl
     shape_type = TYPE_RECT;
 };
 
+PhysRect::PhysRect() : coord1(0, 0), coord2(1, 1), color(TX_RED), size(1, 1), PhysShape(1 / 2, 1 / 2, 1, 1, 1) {
+    shape_type = TYPE_RECT;
+}
+
 void PhysRect::move(double time) {
     coord.x += speed.get_x() * time;
     coord.y += speed.get_y() * time;
@@ -107,7 +111,7 @@ void CheckAllCollisions(Manager& manager, Coordinates* coord) {
     typedef int (*WallsChecker)(PhysShape* object, const Coordinates* coord);
     static WallsChecker WallsFuncs[TYPE_COUNT] = {CheckWall_C, CheckWall_R};
 
-    typedef void (*ObjectCollisions)(PhysShape* lhs, PhysShape* rhs);
+    typedef void (*ObjectCollisions)(PhysShape* lhs, PhysShape* rhs, Manager& manager);
     static ObjectCollisions CollisionFuncs[TYPE_COUNT][TYPE_COUNT] = {
       {&CheckCollision_CC, &CheckCollision_CR},
       {&CheckCollision_RC, &CheckCollision_RR}
@@ -123,13 +127,12 @@ void CheckAllCollisions(Manager& manager, Coordinates* coord) {
             ProceedWall(figure, coord, wall_check);
         }
 
-        
         for (int j = 0; j < manager.get_count(); ++j) {
             if (i != j) {
                 PhysShape* figure_coll = manager.get_figure(j);
                 int type_rhs = figure_coll->get_type();    
                 //fprintf(stderr, "Collided lhs: %d, rhs: %d\n", i, j);
-                CollisionFuncs[type_lhs][type_rhs](figure, figure_coll);
+                CollisionFuncs[type_lhs][type_rhs](figure, figure_coll, manager);
             }
         }
         
