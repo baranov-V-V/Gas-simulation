@@ -3160,3 +3160,101 @@ Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\tes
 Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00000000004B0AB0 в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp на строке 32. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000006E2BA0 (64-bit), Flags: CMdRe0, Thread: 0x2D7C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00000000004B0AB0 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp (32):
+
+     30:             min.x = dots[i].x;
+     31:         }
+=>   32:         if (dots[i].y > max.y) {
+     33:             max.y = dots[i].y;
+     34:         }
+
+# 1 0x000000000041D7B8 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (29):
+
+     27:     Texture graph_texture(600, 150, TX_WHITE, 0, 600);
+     28:     Renderer graph_render(&graph_texture, &graph_coord);
+=>   29:     Graph graph(dots, 5);
+     30: 
+     31:     Coordinates button_coord(0, 800, 0, 750);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Oct  4 2021 04:32:44, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Oct 04 2021 04:32:55
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe,
+
+ВНЕЗАПНО: signal (8, 0x00): SIGFPE: Грубая ошибка в вычислениях. 
+
+Недопустимая операция с плавающей точкой.
+
+#1: Исключение EXCEPTION_FLT_INVALID_OPERATION (0xC0000090) при выполнении кода по адресу 0x00000000004B0AB0 в файле C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp на строке 32. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400], Instance: 0x00000000006E2BA0 (64-bit), Flags: CMdRe0, Thread: 0x2D7C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00000000004B0AB0 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/Functions.cpp (32):
+
+     30:             min.x = dots[i].x;
+     31:         }
+=>   32:         if (dots[i].y > max.y) {
+     33:             max.y = dots[i].y;
+     34:         }
+
+# 1 0x000000000041D7B8 in C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe: main() at C:/Documents and Settings/VBAR/Documents/Programs_C/Gas-simulation/test.cpp (29):
+
+     27:     Texture graph_texture(600, 150, TX_WHITE, 0, 600);
+     28:     Renderer graph_render(&graph_texture, &graph_coord);
+=>   29:     Graph graph(dots, 5);
+     30: 
+     31:     Coordinates button_coord(0, 800, 0, 750);
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 170, Date: 2021-03-13 03:10:30 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	TXLib.h
+Compiled:	Oct  4 2021 04:32:44, GNU g++ 8.1.0, std=201402L, MinGW-W64 Runtime 6.0.0 (alpha - rev. 0) 0000-00-00, 64-bit, Debug
+Started:	Oct 04 2021 04:32:55
+
+Run file:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation\test.exe
+Directory:	C:\Documents and Settings\VBAR\Documents\Programs_C\Gas-simulation
+
+--------------------------------------------------

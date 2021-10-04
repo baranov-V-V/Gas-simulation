@@ -1,8 +1,10 @@
 #include "TXLib.h"
 #include <cmath>
+#include <ctime>
 #include "MathVector2D.h"
 
 using std::rand;
+using std::max;
 
 const double dt = 0.03;
 
@@ -34,6 +36,11 @@ enum OBJECT_TYPES {
     TYPE_CIRCLE = 0,
     TYPE_RECT = 1,
     TYPE_COUNT = 2
+};
+
+enum WINDOW_TYPES {
+    TYPE_WINDOW = 1,
+    TYPE_TEXTURE = 2,
 };
 
 class BasicPhys;
@@ -85,8 +92,8 @@ class Renderer {
     void draw_circle(double x, double y, double r, COLORREF color = TX_BLACK, int thickness = 1) const;
     void draw_rectangle(double x1, double y1, double x2, double y2, COLORREF color = TX_BLACK, int thinkness = 1) const;
 
-    inline int to_pixel_x(double coord) const;
-    inline int to_pixel_y(double coord) const;
+    int to_pixel_x(double coord) const;
+    int to_pixel_y(double coord) const;
     
     double to_coord_x(int x) const;
     double to_coord_y(int y) const;
@@ -132,44 +139,6 @@ class Shape {
     int shape_type;
 };
 
-/*
-class Circle : public Shape {
-  public:
-    Circle(double x, double y, double raduis, COLORREF color);
-    virtual void draw(const Renderer& renderer) const override;
-    
-    double get_radius() const { return radius; };  
-
-  private:
-    inline bool check_bound(double x, double y) const;
-
-    double radius;
-    COLORREF color;
-};
-
-class Rectangl: public Shape {
-  public:
-    Rectangl(double x1, double y1, double x2, double y2, COLORREF color);
-    virtual void draw(const Renderer& renderer) const override;
-    
-    double get_x1() const { return coord1.x; };
-    double get_y1() const { return coord1.y; }; 
-
-    double get_x2() const { return coord2.x; };
-    double get_y2() const { return coord2.y; };
-
-    double get_size_x() const { return size.x; };
-    double get_size_y() const { return size.y; };
-
-  protected:
-    Pair<double> size;
-    Pair<double> coord1;
-    Pair<double> coord2;
-
-  private:
-    COLORREF color;
-}; */
-
 class PhysShape : public Shape, public BasicPhys {
   public:
     PhysShape(double x, double y, double v_x, double v_y, double mass) :
@@ -186,7 +155,7 @@ class PhysCircle : public PhysShape {
     double get_radius() const { return radius; };  
 
   private:
-    inline bool check_bound(double x, double y) const;
+    bool check_bound(double x, double y) const;
 
     double radius;
     COLORREF color;
@@ -208,6 +177,8 @@ class PhysRect: public PhysShape {
     double get_size_x() const { return size.x; };
     double get_size_y() const { return size.y; };
 
+    double set_new_size(double x, double y);
+
   protected:
     Pair<double> size;
     Pair<double> coord1;
@@ -216,19 +187,6 @@ class PhysRect: public PhysShape {
   private:
     COLORREF color;
 };
-/*
-class PhysRect: public Rectangl, public BasicPhys {
-  public:
-    PhysRect(double x1, double y1, double x2, double y2, double v_x, double v_y, double mass, COLORREF color);
-    void move(double time) override;
-};
-
-class PhysCircle : public Circle, public BasicPhys {
-  public:
-    PhysCircle(double x, double y, double radius, double v_x, double v_y, double mass, COLORREF color);
-    void move(double time) override;
-};
-*/
 
 class Manager {
   public:
@@ -270,8 +228,10 @@ class VirtualWindow : public Frame {
     HDC get_hdc() const;
     RGBQUAD* get_buf() const;
     COLORREF get_color() const;
+    int get_type() const { return type; };
 
   protected:
+    int type;
     HDC screen;
     RGBQUAD* buf_screen;
     COLORREF color;
@@ -306,6 +266,8 @@ class Button : public Frame {
     int get_coord_y() const { return coord.y; };
     
     virtual void draw(const Renderer& render) const = 0;
+    bool check_press(const Renderer& render) const;
+    bool check_boundary(const Renderer& render) const;
 
   protected:
     Pair<int> coord;
@@ -313,7 +275,7 @@ class Button : public Frame {
 
 class TextButton : public Button {
   public:
-    TextButton(int x_size, int y_size, int x, int y, COLORREF color, char* text);
+    TextButton(int x_size, int y_size, int x, int y, COLORREF color, char* text, void (*Action)(Manager& manager));
     TextButton();
     TextButton(const TextButton&);
     ~TextButton();
@@ -323,11 +285,11 @@ class TextButton : public Button {
     const char* get_text() const { return text; };
     int get_len() const { return len; };
     
-    bool check_press() const;
-    void make_action() const;
+    void make_action(Manager& manager) const;
     void draw(const Renderer& render) const override;
 
   private:
+    void (*Action)(Manager& manager);
     COLORREF color;
     char* text;
     int len;
@@ -346,7 +308,7 @@ class ButtonManager {
     int get_count() const { return count; };
 
     void draw_all(const Renderer& renderer) const;
-    void check_press() const;
+    void check_all(const Renderer& render, Manager& manager) const;
 
   private:
     int count;
@@ -392,3 +354,12 @@ int CheckWall_R(PhysShape* object, const Coordinates* coord);
 void ProceedWall(PhysShape* object, const Coordinates* coord, int wall_type);
 
 void CheckAllCollisions(Manager& manager, Coordinates* coord);
+
+void ActionAddCircle(Manager& manager);
+void ActionAddRect(Manager& manager);
+void ActionIncSpeed(Manager& manager);
+void ActionDecSpeed(Manager& manager);
+
+void PrintMousePos();
+int NumOfDigits(int num);
+void GetMouse(double& x, double& y, const Renderer& render);

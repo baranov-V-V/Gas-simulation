@@ -6,7 +6,7 @@ int main() {
 
     Coordinates coord(0, 10, 0, 10);
     Renderer render(&gas_can, &coord);
-    Manager manager(10);
+    Manager manager(1000);
 
     PhysCircle* b1 = new PhysCircle(1, 1, 0.5, 2, 1, 1, RGB(255, 255, 0));
     PhysCircle* b2 = new PhysCircle(3, 3, 1, 3, 1, 1, RGB(128, 128, 0));
@@ -31,14 +31,18 @@ int main() {
     Coordinates button_coord(0, 800, 0, 750);
     Texture button_texture(800, 750, TX_WHITE, 600, 0);
     Renderer button_render(&button_texture, &button_coord);
-    TextButton* button1 = new TextButton(200, 200, 100, 500, TX_BLUE, "Add Circle!");
+    
+    TextButton* button1 = new TextButton(200, 80, 100, 650, TX_BLUE, "Add Circle!", ActionAddCircle);
+    TextButton* button2 = new TextButton(200, 80, 100, 500, TX_BLUE, "Add Rectangle!", ActionAddRect);
+    TextButton* button3 = new TextButton(200, 80, 100, 350, TX_BLUE, "Inc Temperature!", ActionIncSpeed);
+    TextButton* button4 = new TextButton(200, 80, 100, 200, TX_BLUE, "Dec Temperature!", ActionDecSpeed);
 
     ButtonManager button_manager(10);
     button_manager.add_button(button1);
+    button_manager.add_button(button2);
+    button_manager.add_button(button3);
+    button_manager.add_button(button4);
     button_manager.draw_all(button_render);
-
-    button_render.draw_circle(100, 100, 50, TX_BLACK, 10);
-    button_texture.show_on(main_window.get_hdc());
 
     double time = dt;
     while (!GetAsyncKeyState(VK_ESCAPE)) {
@@ -54,23 +58,12 @@ int main() {
         //graph_texture.show_on(main_window.get_hdc());
 
         button_manager.draw_all(button_render);
+        button_manager.check_all(button_render, manager);        
         button_texture.show_on(main_window.get_hdc());
 
         txSleep(30);
     }
-    
-    /*
-    manager.draw_all(render);
-    render.show_on(main_window);
-    render.clear();
-    txSleep(1000);
 
-    manager.del_figure(&b1);
-    manager.del_last();
-    
-    manager.draw_all(render);
-    render.show_on(main_window);
-    */
 
     return 0;
 }

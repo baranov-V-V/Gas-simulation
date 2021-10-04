@@ -3,8 +3,8 @@
 Button::Button(int x_size, int y_size, int x, int y) :
     Frame(x_size, y_size), coord(x, y) {};
 
-TextButton::TextButton(int x_size, int y_size, int x, int y, COLORREF color, char* text) : 
-    Button(x_size, y_size, x, y), color(color) {
+TextButton::TextButton(int x_size, int y_size, int x, int y, COLORREF color, char* text, void (*Action)(Manager& manager)) : 
+    Button(x_size, y_size, x, y), color(color), Action(Action) {
     len = strlen(text);
     TextButton::text = new char[len + 1];
     strcpy(TextButton::text, text);
@@ -27,19 +27,8 @@ TextButton::~TextButton() {
     delete[] text;
 };
 
-void TextButton::draw(const Renderer& render) const {
-    render.draw_rectangle(coord.x, coord.y, coord.x + size.x, coord.y + size.y, color, 4);
-
-    txSelectFont("Comic Sans MS", size.y / 2, size.x / len * 2 / 3, FW_DONTCARE, false, false, false, 0, render.get_window()->get_hdc());
-    txTextOut(coord.x + size.x / 6, render.get_window()->get_size_y() - (coord.y + size.y / 4), text, render.get_window()->get_hdc());
-};
-
-bool TextButton::check_press() const {
-
-}
-
-void TextButton::make_action() const {
-
+void TextButton::make_action(Manager& manager) const {
+    Action(manager);
 }
 
 ButtonManager::ButtonManager(int max_count) : size(max_count), count(0) {
@@ -59,13 +48,35 @@ void ButtonManager::draw_all(const Renderer& renderer) const {
     }
 };
 
+void ButtonManager::check_all(const Renderer& render, Manager& manager) const {
+
+    static clock_t time = 0;
+    static bool is_pressed = false;
+
+    if (is_pressed) {
+        if (clock() - time < CLOCKS_PER_SEC * 1) {
+            return;    
+        }
+        else {
+            is_pressed = false;
+        }
+    }
+
+    for (int i = 0; i < this->get_count(); ++i) {
+        TextButton* button = (TextButton*) this->get_button(i);
+        if (button->check_press(render) && !is_pressed) {
+            time = clock();
+            is_pressed = true;
+            button->make_action(manager);
+        }
+    }
+};
+
 void ButtonManager::add_button(Button* button) {
     if (count < size) {
         buttons[count++] = button;
     }
 };
-
-
 
 void ButtonManager::del_button(const Button* button) {
     int pos = 0;
@@ -84,5 +95,31 @@ void ButtonManager::del_last() {
     buttons[--count] = nullptr;
 };
 
+void ActionAddCircle(Manager& manager) {
+    double x = 2;
+    double y = 2;
+    double r = 0.5;
+    PhysCircle* tmp = new PhysCircle(x, y, r, rand() % 3, rand() % 3, 1, RGB(128, rand() % 256, rand() % 256));
+    manager.add_figure(tmp);
+}
 
+void ActionAddRect(Manager& manager) {
+    double x = 1;
+    double y = 1;
+    PhysRect* tmp = new PhysRect(x, y, x + 0.5, y + 0.6, rand() % 3, rand() % 3, 1 + rand() % 3, RGB(255, rand() % 256, rand() % 256));
+    manager.add_figure(tmp);
+}
 
+void ActionIncSpeed(Manager& manager) {
+    for (int i = 0; i < manager.get_count(); ++i) {
+        PhysShape* shape = manager.get_figure(i);
+        shape->set_speed(shape->get_speed().get_x() * 11 / 10, shape->get_speed().get_y() * 11 / 10); 
+    }
+}
+
+void ActionDecSpeed(Manager& manager) {
+    for (int i = 0; i < manager.get_count(); ++i) {
+        PhysShape* shape = manager.get_figure(i);
+        shape->set_speed(shape->get_speed().get_x() * 9 / 10, shape->get_speed().get_y() * 9 / 10); 
+    }
+}

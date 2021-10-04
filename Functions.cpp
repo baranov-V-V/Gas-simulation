@@ -22,6 +22,9 @@ Graph::Graph(double max_x, double min_x, double step, double (*func)(double x)) 
 };
 
 Graph::Graph(Pair<double>* dots, int count) {
+    max.x = dots[0].x, min.x = dots[0].x;
+    max.y = dots[0].y, min.y = dots[0].y;
+
     for(int i = 0; i < count; ++i) {
         if (dots[i].x > max.x) {
             max.x = dots[i].x;
@@ -70,68 +73,6 @@ void Graph::print_dots() const {
         printf("|%-12.6lf|%-12.6lf|\n", dots[i].x, dots[i].y);
     }
 }
-
-void Graph::draw(const Renderer& render) const {
-    for(int i = 0; i < dots_count - 1; ++i) {
-        render.draw_line(dots[i].x, dots[i].y, dots[i + 1].x, dots[i + 1].y);
-    }
-}
-
-void Graph::draw_axis(const Renderer& render) {
-    VirtualWindow* target = render.get_window();
-    Coordinates* coord = render.get_coordinates();
-
-    double size_x = target->get_size_x();
-    double size_y = target->get_size_y();
-    HDC hdc = target->get_hdc();
-
-    const int edge_thickness = 2;
-
-
-
-    txSetColor(TX_BLACK, edge_thickness, hdc);
-    txSetFillColor(target->get_color(), hdc);
-    txRectangle(0, 0, target->get_size_x(), target->get_size_y(), hdc);
-
-
-    double right_x = size_x - size_x / 50;
-    double upper_y = size_y / 50;
-    double arrow_x = size_x / 30;
-    double arrow_y = size_y / 30;
-
-    double center_x = double(size_x) / 50 + fabs(coord->get_min_x()) * render.get_scale_x();
-    double center_y = double(size_y) / 50 + fabs(coord->get_max_y()) * render.get_scale_y();
-
-    txLine(size_x / 50, center_y, right_x, center_y, hdc);          //x-axis
-    txLine(center_x, upper_y, center_x, size_y /*+ size_y / 50*/, hdc); //y-axis
-
-    //arrows
-    txLine(right_x, center_y, right_x - arrow_x , center_y - arrow_y, hdc);
-    txLine(right_x, center_y, right_x - arrow_x , center_y + arrow_y, hdc);
-
-    txLine(center_x, upper_y, center_x + arrow_x, upper_y + arrow_y, hdc);
-    txLine(center_x, upper_y, center_x - arrow_x, upper_y + arrow_y, hdc);
-
-    double font_x = size_x / 60;
-    double font_y = size_y / 15;
-
-    const int axis_thickness = 2;
-
-    txSetColor(TX_BLACK, axis_thickness, hdc);
-    txSelectFont("Comic Sans MS", font_y, font_x, FW_DONTCARE, false, false, false, 0, hdc);
-
-    txTextOut(center_x - axis_thickness - font_x * 2, edge_thickness * 4 + arrow_y, "Y", hdc);
-    txTextOut(size_x - edge_thickness * 4 - font_x * 1.5, center_y - axis_thickness - font_y * 1.5, "X", hdc);
-
-    //!numbers
-    char num_buff[4] = {};
-    txTextOut(size_x - edge_thickness * 4 - font_x * (0.5 + NumOfDigits(coord->get_max_x())),
-              center_y + axis_thickness + font_y * 0.25 + arrow_y, itoa(coord->get_max_x(), num_buff, 10), hdc);             //max_x
-    txTextOut(edge_thickness * 4, center_y + axis_thickness + font_y * 0.25, itoa(coord->get_min_x(), num_buff, 10), hdc);   //min_x
-    txTextOut(center_x + axis_thickness * 3 + arrow_x, edge_thickness * 2, itoa(coord->get_max_y(), num_buff, 10), hdc);     //max_y    
-    txTextOut(center_x + axis_thickness * 3, size_y - edge_thickness - font_y, itoa(coord->get_min_y(), num_buff, 10), hdc); //min_y    
-    txTextOut(center_x + axis_thickness * 3, center_y + axis_thickness + font_y * 0.25, "0", hdc);                           //draw "0"
-};
 
 double Sqr(double num) {
     return num * num;
